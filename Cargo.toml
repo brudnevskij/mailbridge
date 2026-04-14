@@ -10,6 +10,7 @@ path = "src/lib.rs"
 actix-web = "4"
 reqwest = "0.11"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+serde = { version = "1", features = ["derive"]}
 
 [[bin]]
 path = "src/main.rs"
