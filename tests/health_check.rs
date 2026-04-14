@@ -9,7 +9,7 @@ async fn spawn_app() -> String {
 
     let _ = tokio::spawn(srv);
 
-    format!("127.0.0.1:{}", port)
+    format!("http://127.0.0.1:{}", port)
 }
 
 #[tokio::test]
@@ -19,7 +19,7 @@ async fn health_check_works() {
     let client = reqwest::Client::new();
 
     let response = client
-        .get(format!("http://{}/health_check", &address))
+        .get(format!("{}/health_check", &address))
         .send()
         .await
         .expect("Failed to send request");
