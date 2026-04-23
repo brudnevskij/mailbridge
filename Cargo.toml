@@ -10,18 +10,21 @@ path = "src/lib.rs"
 actix-web = "4"
 reqwest = "0.11"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-serde = { version = "1", features = ["derive"]}
+serde = { version = "1", features = ["derive"] }
 config = "0.11"
+uuid = { version = "1", features = ["v4"] }
+chrono = "0.4.15"
+
 [dependencies.sqlx]
 version = "0.6"
 default-features = false
 features = [
-	"runtime-actix-rustls",
-	"macros",
-	"postgres",
-	"uuid",
-	"chrono",
-	"migrate"
+    "runtime-actix-rustls",
+    "macros",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate"
 ]
 
 [[bin]]
