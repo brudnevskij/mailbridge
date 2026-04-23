@@ -1,4 +1,4 @@
-use mailbridge::{configuration::get_configuration, run};
+use mailbridge::{configuration::get_configuration, startup::run};
 use std::net::TcpListener;
 
 #[tokio::main]

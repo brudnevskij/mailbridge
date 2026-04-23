@@ -1,9 +1,6 @@
 use std::net::TcpListener;
 
-use mailbridge::{
-    configuration::{self, get_configuration},
-    run,
-};
+use mailbridge::{configuration::get_configuration, startup::run};
 use sqlx::Connection;
 
 async fn spawn_app() -> String {
