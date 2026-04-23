@@ -1,6 +1,10 @@
 use std::net::TcpListener;
 
-use mailbridge::run;
+use mailbridge::{
+    configuration::{self, get_configuration},
+    run,
+};
+use sqlx::Connection;
 
 async fn spawn_app() -> String {
     let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
@@ -30,6 +34,12 @@ async fn health_check_works() {
 #[tokio::test]
 async fn subscribe_return_a_200_for_valid_form() {
     let address = spawn_app().await;
+    let configuration = get_configuration().expect("Failed to read configuration");
+    let connection_string = configuration.database.connection_string();
+
+    let mut connection = sqlx::PgConnection::connect(&connection_string)
+        .await
+        .expect("Failed to connect to Postgres");
     let client = reqwest::Client::new();
 
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
@@ -42,6 +52,14 @@ async fn subscribe_return_a_200_for_valid_form() {
         .expect("Failed to execute request");
 
     assert_eq!(response.status().as_u16(), 200);
+
+    let saved = sqlx::query!("SELECT email, name FROM subscriptions")
+        .fetch_one(&mut connection)
+        .await
+        .expect("Failed to fetch");
+
+    assert_eq!(saved.email, "ursula_le_guin@gmail.com");
+    assert_eq!(saved.name, "le guin");
 }
 
 #[tokio::test]
