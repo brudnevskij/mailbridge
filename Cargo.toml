@@ -38,6 +38,9 @@ features = [
     "offline"
 ]
 
+[dev-dependencies]
+claim = "0.5"
+
 [[bin]]
 path = "src/main.rs"
 name = "mailbridge"
