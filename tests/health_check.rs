@@ -1,4 +1,3 @@
-use core::convert::Into;
 use mailbridge::{
     configuration::{DatabaseSettings, get_configuration},
     startup::run,
