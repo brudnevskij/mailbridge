@@ -12,3 +12,10 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+    environment:
+      APP_DATABASE__USERNAME: "postgres"
+      APP_DATABASE__PASSWORD: "password"
+      APP_DATABASE__HOST: 127.0.0.1
+      APP_DATABASE__PORT: 5432
+      APP_DATABASE__NAME: "newsletter"
+      APP_ENVIRONMENT: local
