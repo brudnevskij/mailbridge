@@ -1,10 +1,10 @@
 use mailbridge::{
     configuration::{DatabaseSettings, get_configuration},
+    email_client::EmailClient,
     startup::run,
     telemetry::{get_subscriber, init_subscriber},
 };
 use once_cell::sync::Lazy;
-use secrecy::ExposeSecret;
 use sqlx::{Connection, Executor, PgConnection, PgPool};
 use std::net::TcpListener;
 use uuid::Uuid;
@@ -38,7 +38,14 @@ async fn spawn_app() -> TestApp {
 
     let db_pool = configure_database(&configuration.database).await;
 
-    let srv = run(listener, db_pool.clone())
+    let sender_email = configuration
+        .email_client
+        .sender()
+        .expect("Invalid sender email");
+
+    let email_client = EmailClient::new(configuration.email_client.base_url, sender_email);
+
+    let srv = run(listener, db_pool.clone(), email_client)
         .await
         .expect("Failed to bind address");
 
