@@ -9,3 +9,4 @@ database:
 email_client:
   base_url: "local_host"
   sender_email: "test@gmail.com"
+  authorization_toke: "secret_token"
