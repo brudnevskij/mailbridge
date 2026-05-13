@@ -8,7 +8,7 @@ path = "src/lib.rs"
 
 [dependencies]
 actix-web = "4"
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "rt", "macros"] }
 serde = { version = "1", features = ["derive"] }
 config = "0.11"
 uuid = { version = "1", features = ["v4"] }
@@ -41,6 +41,8 @@ features = [
 
 [dev-dependencies]
 claim = "0.5"
+wiremock = "0.5"
+fake = { version = "5", features = ["derive"] }
 
 [[bin]]
 path = "src/main.rs"
